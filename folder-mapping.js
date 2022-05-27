@@ -1,12 +1,11 @@
+import fs from 'fs';
 import UserInterface from './user-interface.js';
-import pathValidator from './path-validator.js';
 
 class FolderMapping {
     #folders;
 
     constructor() {
         this.userInterface = new UserInterface();
-        this.pathValidator = pathValidator;
     }
 
     get folders() {
@@ -44,14 +43,10 @@ class FolderMapping {
         }
     }
 
-    isPathValid(path) {
-        const [error, success] = this.pathValidator(path);
+    async isPathValid(itemPath) {
+        const checkPath = fs.statSync(itemPath);
 
-        if(error || success === "is a file") {
-            return false;
-        } 
-
-        return true;
+        return checkPath ? true : false;
     }
 }
 

@@ -10,6 +10,7 @@
   "author": "Patrick",
   "license": "ISC",
   "dependencies": {
+    "n": "^8.2.0",
     "path": "^0.12.7"
   }
 }

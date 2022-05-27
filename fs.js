@@ -27,27 +27,27 @@ class FS {
 
   getAllFiles(extension = null) {
     return new Promise(async (resolve, reject) => {
-      const readDir = await this.#partialReadDir(this.path, extension);
+      const readDir = await this.#readAllDirs(this.path, extension);
       const files = await readDir();
 
       resolve(null, files);
     })
   }
 
-  #partialReadDir(folderName, extension=null) {
+  #readAllDirs(folder, extension=null) {
     let fileList = [];
 
     return async function readDir() {
       const args = Array.from(arguments);
 
-      if(args.length == 1) folderName = args[0];
+      if(args.length == 1) folder = args[0];
       if(args.length > 1) throw new Error("Too many arguments");
 
-      const items = fs.readdirSync(folderName);
+      const items = fs.readdirSync(folder);
 
       items.forEach(item => {
-        const checkItem = fs.statSync(path.resolve(folderName, item));
-        const resolvedPath = path.resolve(folderName, item)
+        const checkItem = fs.statSync(path.resolve(folder, item));
+        const resolvedPath = path.resolve(folder, item)
 
         if(checkItem.isDirectory()) {
           return readDir(resolvedPath);
