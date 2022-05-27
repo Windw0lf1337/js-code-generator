@@ -1,32 +1,87 @@
 import FileHandler from "./fs.js";
 import FolderMapping from "./folder-mapping.js";
 
-class Configuration {
+class Config {
+    #init;
+    #folderPaths;
+    #filePaths;
+
     constructor() {
         this.folderMapping = new FolderMapping();
-        this.fileHandler = new FileHandler("config.json", "");
+        this.configFolder = new FileHandler("config");
     }
 
-    get parseJSON() {
-        return JSON.parse(this.fileHandler.readFileSync());
-    }
-
-    isConfigurationCompleted() {
-        if(this.fileHandler.readFileSync() == "") return false;
-
-        return true;
-    }
-
-    addConfiguration() {
+    init() {
         return new Promise(async (resolve, reject) => {
-            await folderMapping.mapFolders();
-            const folders = folderMapping.toString();
+            this.#folderPaths = await this.configFolder.readFile("folder-pairs.json");
+            this.#filePaths = await this.configFolder.readFile("file-pairs.json");
+            this.#init = true;
+
+            resolve();
+        })  
+    }
+
+    get isConfigured() {
+        return this.#init && this.#folderPaths && this.#filePaths;
+    }
+
+    get folderPaths() {
+        return this.#folderPaths;
+    }
+
+    get filePaths() {
+        return this.#filePaths;
+    }
+
+    createConfig() {
+        return new Promise(async (resolve, reject) => {
+            await this.folderMapping.mapFolders();
+
+            const folderPaths = folderMapping.folders;
+            await this.configFolder.writeFile("folder-pairs.json", JSON.stringify(folderPaths));
+            this.#folderPaths = folderPaths;
     
-            fileHandler.writeFileSync(folders);
+            let filePaths;
+
+            for(let folderPath of folderPaths) {
+                const destinationFolder = new FileHandler(folderPath.destination);
+
+                const destinationFiles = await destinationFolder.getAllFiles("js");
+
+                for(let destinationFile of destinationFiles) {
+                    const fileFolder = new FileHandler(destinationFile.path);
+                    const fileContent = await fileFolder.readFile(destinationFile.filename); //filePaths.push(file);
+
+                    if(fileContent.includes("// paste code here")) { 
+                        const checkComment = new RegExp("\\\/\\\/(\\\s*)paste(\\\s*)code(\\\s*)here(\\\s*).*\\\.(html)$", "i");
+
+                        if(fileContent.search(checkComment)) {
+                            const checkSourceHtmlFile = new RegExp("\\\w*\\\.(html)$", "i")
+                            const htmlFileName = fileContent.search(checkSourceHtmlFile);
+
+                            const sourceFolder = new FileHandler(folderPath.source);
+
+                            const sourceFiles = await sourceFolder.getAllFiles("html");
+
+                            for(let sourceFile of sourceFiles) {
+                                if(sourceFile.filename == htmlFileName) {
+                                    filePaths.push({
+                                        source: sourceFile.source,
+                                        destination: destinationFile.source
+                                    })
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            await this.configFolder.writeFile("file-pairs.json", JSON.stringify(filePaths));
+            this.#filePaths = filePaths;
 
             resolve();
         })
     }
 }
 
-export default Configuration;
+export default Config;

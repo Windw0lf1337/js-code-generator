@@ -9,27 +9,34 @@ class FolderMapping {
         this.pathValidator = pathValidator;
     }
 
+    get folders() {
+        return this.#folders;
+    }
+
     toString() {
         return JSON.stringify(this.#folders);
     }
 
-    mapFolders() {
-        const source = this.userInterface.readLine("source folder path: ");
+    async mapFolders() {
+        const source = await this.userInterface.readline("source folder path: ");
         if(this.isPathValid(source)) {
             this.userInterface.writeline("source path is invalid");
             this.mapFolders();
         }
 
-        const destination = this.userInterface.readline("destination folder path: ");
+        const destination = await this.userInterface.readline("destination folder path: ");
         if(this.isPathValid(destination)) {
             this.userInterface.writeline("destination path is invalid");
             this.mapFolders();
         }
 
-        this.#folders[source] = destination;
+        this.#folders.push({
+            source,
+            destination
+        })
     
         do {
-            var nextFolder = this.userInterface.readLine("next folder pair (yes/no): ");
+            var nextFolder = await this.userInterface.readline("next folder pair (yes/no): ");
         } while(nextFolder === "yes" || nextFolder === "no");
 
         if(nextFolder === "yes") {
