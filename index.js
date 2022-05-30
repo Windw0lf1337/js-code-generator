@@ -1,5 +1,10 @@
+//import { dirname } from 'path';
+//import { fileURLToPath } from 'url';
+
 import Config from "./configuration.js";
 import FS from "./fs.js";
+
+//global.__dirname = dirname(fileURLToPath(import.meta.url));
 
 (async () => {
     const config = new Config();

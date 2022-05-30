@@ -5,6 +5,7 @@ class FolderMapping {
     #folders;
 
     constructor() {
+        this.#folders = [];
         this.userInterface = new UserInterface();
     }
 
@@ -18,16 +19,16 @@ class FolderMapping {
 
     async mapFolders() {
         const source = await this.userInterface.readline("source folder path: ");
-        if(this.isPathValid(source)) {
+        if(!(await this.isPathValid(source))) {
             this.userInterface.writeline("source path is invalid");
             this.mapFolders();
-        }
+        } 
 
         const destination = await this.userInterface.readline("destination folder path: ");
-        if(this.isPathValid(destination)) {
+        if(!(await this.isPathValid(destination))) {
             this.userInterface.writeline("destination path is invalid");
             this.mapFolders();
-        }
+        } 
 
         this.#folders.push({
             source,
@@ -44,9 +45,15 @@ class FolderMapping {
     }
 
     async isPathValid(itemPath) {
-        const checkPath = fs.statSync(itemPath);
-
-        return checkPath ? true : false;
+        return new Promise(async (resolve, reject) => {
+            try {
+                const checkPath = await fs.statSync(itemPath);
+    
+                resolve(true);
+            } catch(error) {
+                resolve(false);
+            }
+        })
     }
 }
 
