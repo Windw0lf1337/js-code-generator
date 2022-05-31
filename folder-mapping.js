@@ -32,12 +32,13 @@ class FolderMapping {
 
         this.#folders.push({
             source,
-            destination
+            destination 
         })
     
+        let i= 0;
         do {
             var nextFolder = await this.userInterface.readline("next folder pair (yes/no): ");
-        } while(nextFolder === "yes" || nextFolder === "no");
+        } while(nextFolder !== "yes" && nextFolder !== "no");
 
         if(nextFolder === "yes") {
             this.mapFolders();

@@ -1,16 +1,17 @@
 import fs from "fs";
+import path from 'path';
 
 class FS {
-  constructor(path) {
-    this.path = path;
+  constructor(folderPath) {
+    this.folderPath = folderPath;
   }
 
   readFile(filename) {
     return new Promise((resolve, reject) => {
       fs.readFile(
-        `${this.path ? this.path + "/" : ""}${filename}`,
+        `${this.folderPath ? this.folderPath + "/" : ""}${filename}`,
         "utf-8",
-        (error, data) => resolve(error, data)
+        (error, data) => resolve([error, data])
       )
     })
   }
@@ -18,19 +19,19 @@ class FS {
   writeFile(filename, data) {
     return new Promise((resolve, reject) => {
       fs.writeFile(
-        `${this.path ? this.path + "/" : ""}${filename}`,
+        `${this.folderPath ? this.folderPath + "/" : ""}${filename}`,
         data,
-        (error) => resolve(error, null)
+        (error, data) => resolve([error, data])
       );
     })
   }
 
   getAllFiles(extension = null) {
     return new Promise(async (resolve, reject) => {
-      const readDir = await this.#readAllDirs(this.path, extension);
+      const readDir = await this.#readAllDirs(this.folderPath, extension);
       const files = await readDir();
 
-      resolve(null, files);
+      resolve(files);
     })
   }
 
@@ -45,15 +46,21 @@ class FS {
 
       const items = fs.readdirSync(folder);
 
-      items.forEach(item => {
-        const checkItem = fs.statSync(path.resolve(folder, item));
+      for(let item of items) {
+        const checkItem = await fs.statSync(path.resolve(folder, item));
         const resolvedPath = path.resolve(folder, item)
 
         if(checkItem.isDirectory()) {
           return readDir(resolvedPath);
         } else {
             if(extension) {
-              if(item.split(".")[1] == extension) fileList.push(resolvedPath)
+              if(item.split(".")[1] == extension) {
+                console.log(fileList);
+                fileList.push({
+                  filename: item,
+                  path: resolvedPath
+                });
+              }
             } else {
               fileList.push({
                 filename: item,
@@ -61,7 +68,7 @@ class FS {
               });
             }
         }
-      })
+      }
 
       return fileList;
     }

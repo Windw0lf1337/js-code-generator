@@ -37,8 +37,12 @@ class Config {
         return new Promise(async (resolve, reject) => {
             await this.folderMapping.mapFolders();
 
-            const folderPaths = folderMapping.folders;
-            await this.configFolder.writeFile("folder-pairs.json", JSON.stringify(folderPaths));
+            const folderPaths = this.folderMapping.folders;
+          
+            const [error, folderPair] = await this.configFolder.writeFile("folder-pairs.json", JSON.stringify(folderPaths));
+
+            if(error) throw new Error("cant create folder pairs config file");
+
             this.#folderPaths = folderPaths;
     
             let filePaths;
@@ -50,7 +54,12 @@ class Config {
 
                 for(let destinationFile of destinationFiles) {
                     const fileFolder = new FileHandler(destinationFile.path);
-                    const fileContent = await fileFolder.readFile(destinationFile.filename); //filePaths.push(file);
+                    const [error, fileContent] = await fileFolder.readFile(destinationFile.filename); //filePaths.push(file);
+                   console.log("eeerrror");console.log(error);
+                    if(error) throw new Error("error reading file in destination folder");
+
+                    console.log("fileContent: ");
+                    console.log(fileContent);
 
                     if(fileContent.includes("// paste code here")) { 
                         const checkComment = new RegExp("\\\/\\\/(\\\s*)paste(\\\s*)code(\\\s*)here(\\\s*).*\\\.(html)$", "i");
@@ -75,7 +84,8 @@ class Config {
                     }
                 }
             }
-
+            console.log("filePaths:")
+            console.log(filePaths);
             await this.configFolder.writeFile("file-pairs.json", JSON.stringify(filePaths));
             this.#filePaths = filePaths;
 

@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from 'path';
 
-(async (fs, path) => {
+/*(async (fs, path) => {
     function readAllFiles(folderName) {
        let fileList = [];
 
@@ -39,4 +39,4 @@ import path from 'path';
     })
 
     console.log(generatorFiles);
-})(fs, path);
+})(fs, path);*/
