@@ -1,1 +1,4 @@
-[{"source":"html","destination":"js"}]
+{
+    "source":"html",
+    "destination":"js"
+}

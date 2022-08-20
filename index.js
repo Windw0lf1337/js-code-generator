@@ -1,16 +1,24 @@
 //import { dirname } from 'path';
 //import { fileURLToPath } from 'url';
 
-import Config from "./configuration.js";
 import FS from "./fs.js";
+import FolderMapping from "./folder-mapping.js";
 
 //global.__dirname = dirname(fileURLToPath(import.meta.url));
 
 (async () => {
-    const config = new Config();
+    const fs = new FS("config");
 
-    if(!config.isConfigured) 
-        await config.createConfig();
+    const { source, destination } = JSON.parse(await fs.readFile("folder-pairs.json"));
+
+    const folderPairs = new FolderMapping(source, destination);
+
+    for(let pair in folderPairs) {
+        console.log("pair");console.log(pair);
+    }
+
+    //console.log("source");console.log(source);
+    //console.log("destination");console.log(destination);
     /*const folderPairs = configuration.parseJSON;
 
     function filterForJSFiles(file) {

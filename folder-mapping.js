@@ -1,47 +1,31 @@
-import fs from 'fs';
-import UserInterface from './user-interface.js';
+import FS from 'fs';
 
 class FolderMapping {
-    #folders;
-
-    constructor() {
-        this.#folders = [];
-        this.userInterface = new UserInterface();
+    constructor(source, destination) {
+        this.source = source;
+        this.destination = destination;
     }
 
-    get folders() {
-        return this.#folders;
-    }
+    async [Symbol.iterator]() {
+        let sourceFiles = await new FS(this.source).getAllFiles("html");
+        let destinationFiles = await new FS(this.destination).getAllFiles("js");
 
-    toString() {
-        return JSON.stringify(this.#folders);
-    }
+        let count = 0;
 
-    async mapFolders() {
-        const source = await this.userInterface.readline("source folder path: ");
-        if(!(await this.isPathValid(source))) {
-            this.userInterface.writeline("source path is invalid");
-            this.mapFolders();
-        } 
+        return {
+            next() {
+                const fs = new FS(destinationFiles[count].path);
+                const textContent = fs.readFile(destinationFiles[count].filename)
 
-        const destination = await this.userInterface.readline("destination folder path: ");
-        if(!(await this.isPathValid(destination))) {
-            this.userInterface.writeline("destination path is invalid");
-            this.mapFolders();
-        } 
+                const regex = new RegExp("\\/\\/\\spaste\\scode\\shere\\s([a-z]*)\\.html");
+                const htmlFilename = textContent.match(regex);
 
-        this.#folders.push({
-            source,
-            destination 
-        })
-    
-        let i= 0;
-        do {
-            var nextFolder = await this.userInterface.readline("next folder pair (yes/no): ");
-        } while(nextFolder !== "yes" && nextFolder !== "no");
+                const matchedSourceFile = sourceFiles.find(sourceFile => sourceFile.filename == htmlFilename);
 
-        if(nextFolder === "yes") {
-            this.mapFolders();
+                const folderPairs = {source: matchedSourceFile.path, destination: destinationFiles[count].path};
+
+                return {value: folderPairs, done: destinationFiles.length < count + 1 ? true : false};
+            }
         }
     }
 

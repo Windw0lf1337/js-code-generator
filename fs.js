@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from 'path';
+import { promisify } from 'util';
 
 class FS {
   constructor(folderPath) {
@@ -7,23 +8,15 @@ class FS {
   }
 
   readFile(filename) {
-    return new Promise((resolve, reject) => {
-      fs.readFile(
-        `${this.folderPath ? this.folderPath + "/" : ""}${filename}`,
-        "utf-8",
-        (error, data) => resolve([error, data])
-      )
-    })
+    const readFile = promisify(fs.readFile);
+
+    return readFile(`${this.folderPath ? this.folderPath + "/" : ""}${filename}`, "utf-8");
   }
 
   writeFile(filename, data) {
-    return new Promise((resolve, reject) => {
-      fs.writeFile(
-        `${this.folderPath ? this.folderPath + "/" : ""}${filename}`,
-        data,
-        (error, data) => resolve([error, data])
-      );
-    })
+    const writeFile = promisify(fs.writeFile);
+
+    return writeFile(`${this.folderPath ? this.folderPath + "/" : ""}${filename}`, data);
   }
 
   getAllFiles(extension = null) {
@@ -55,7 +48,6 @@ class FS {
         } else {
             if(extension) {
               if(item.split(".")[1] == extension) {
-                console.log(fileList);
                 fileList.push({
                   filename: item,
                   path: resolvedPath
