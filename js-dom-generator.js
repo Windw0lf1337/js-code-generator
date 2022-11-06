@@ -17,7 +17,7 @@ class DomGenerator {
 
   _init() {
     const document = new JSDOM(this.#html).window.document;
-    this.#firstChild = document.body.firstChild;
+    this.#firstChild = document.firstChild;
   }
 
   toString() {

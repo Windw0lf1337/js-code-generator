@@ -3,68 +3,76 @@ import path from 'path';
 import { promisify } from 'util';
 
 class FS {
-  constructor(folderPath) {
-    this.folderPath = folderPath;
+  static readFile(path) {
+    const fsReadFile = promisify(fs.readFile);
+
+    return fsReadFile(path, "utf-8");
   }
 
-  readFile(filename) {
-    const readFile = promisify(fs.readFile);
+  static writeFile(path, data) {
+    const FswriteFile = promisify(fs.writeFile);
 
-    return readFile(`${this.folderPath ? this.folderPath + "/" : ""}${filename}`, "utf-8");
+    return FswriteFile(path, data);
   }
 
-  writeFile(filename, data) {
-    const writeFile = promisify(fs.writeFile);
-
-    return writeFile(`${this.folderPath ? this.folderPath + "/" : ""}${filename}`, data);
-  }
-
-  getAllFiles(extension = null) {
+  static getAllFiles(path, extension = null) {
     return new Promise(async (resolve, reject) => {
-      const readDir = await this.#readAllDirs(this.folderPath, extension);
+      const readDir = await readAllDirs(path, extension);
       const files = await readDir();
 
       resolve(files);
     })
   }
 
-  #readAllDirs(folder, extension=null) {
-    let fileList = [];
+  static replaceFileContent(path, searchstring, data) {
+    return new Promise(async (resolve, reject)=> {
+      let fileContent = await FS.readFile(path);
 
-    return async function readDir() {
-      const args = Array.from(arguments);
+      fileContent = fileContent.replace(searchstring, data);
 
-      if(args.length == 1) folder = args[0];
-      if(args.length > 1) throw new Error("Too many arguments");
+      await FS.writeFile(path, fileContent);
 
-      const items = fs.readdirSync(folder);
+      resolve();
+    })
+  }
+ }
 
-      for(let item of items) {
-        const checkItem = await fs.statSync(path.resolve(folder, item));
-        const resolvedPath = path.resolve(folder, item)
+ function readAllDirs(folder, extension=null) {
+  let fileList = [];
 
-        if(checkItem.isDirectory()) {
-          return readDir(resolvedPath);
-        } else {
-            if(extension) {
-              if(item.split(".")[1] == extension) {
-                fileList.push({
-                  filename: item,
-                  path: resolvedPath
-                });
-              }
-            } else {
+  return async function readDir() {
+    const args = Array.from(arguments);
+
+    if(args.length == 1) folder = args[0];
+    if(args.length > 1) throw new Error("Too many arguments");
+
+    const items = fs.readdirSync(folder);
+
+    for(let item of items) {
+      const checkItem = await fs.statSync(path.resolve(folder, item));
+      const resolvedPath = path.resolve(folder, item)
+
+      if(checkItem.isDirectory()) {
+        return readDir(resolvedPath);
+      } else {
+          if(extension) {
+            if(item.split(".")[1] == extension) {
               fileList.push({
                 filename: item,
                 path: resolvedPath
               });
             }
-        }
+          } else {
+            fileList.push({
+              filename: item,
+              path: resolvedPath
+            });
+          }
       }
-
-      return fileList;
     }
- }
+
+  return fileList;
+}
 
  /*
 if(extension) {

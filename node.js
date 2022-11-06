@@ -56,7 +56,9 @@ class Node {
     }
   
     setTextContent() {
-      if (this.#node.childNodes[0]) {
+      console.log("node", this.#node.childNodes[0] ? this.#node.childNodes[0].nodeValue : null);
+      
+      if (this.#node.childNodes[0]?.nodeValue) {
         const text = this.#node.childNodes[0].nodeValue.trim();
   
         if (text.length != 0)

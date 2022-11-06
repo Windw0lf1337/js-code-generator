@@ -10,6 +10,7 @@
   "author": "Patrick",
   "license": "ISC",
   "dependencies": {
+    "jsdom": "^20.0.2",
     "n": "^8.2.0",
     "path": "^0.12.7",
     "util": "^0.12.4"

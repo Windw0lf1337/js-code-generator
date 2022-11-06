@@ -2,41 +2,24 @@
 //import { fileURLToPath } from 'url';
 
 import FS from "./fs.js";
-import FolderMapping from "./folder-mapping.js";
+import mappedFolders from "./folder-mapping.js";
+import DomGenerator from "./js-dom-generator.js";
 
 //global.__dirname = dirname(fileURLToPath(import.meta.url));
 
 (async () => {
-    const fs = new FS("config");
+    const { source, destination } = JSON.parse(await FS.readFile("config/folder-pairs.json"));
 
-    const { source, destination } = JSON.parse(await fs.readFile("folder-pairs.json"));
+    const folderPairs = await mappedFolders(source, destination);
 
-    const folderPairs = new FolderMapping(source, destination);
+    for(let folderPair of folderPairs) {
+        console.log("folderPair", folderPair)
+        const html = await FS.readFile(folderPair.source);
+        console.log("html", html)
+        let generator = new DomGenerator(html, 123);
 
-    for(let pair in folderPairs) {
-        console.log("pair");console.log(pair);
+        FS.replaceFileContent(folderPair.destination, "// paste code here h3.html", generator.toString())
+
+        // paste code here h3.html
     }
-
-    //console.log("source");console.log(source);
-    //console.log("destination");console.log(destination);
-    /*const folderPairs = configuration.parseJSON;
-
-    function filterForJSFiles(file) {
-        return file.split(".")[1] == "js" ? true : false;
-    }
-
-    Object.keys(folderPairs).map(async source => {
-        const destination = folderPairs[source];
-
-        const fs = new FS({path: destination});
-
-        const [error, files] = await fs.readdir();
-
-        if(error) {
-            throw new Error(error);
-        }
-
-        const jsFiles = files.filter(file => filterForJSFiles(file));
-        const fileNames = jsFiles.map(file => file.split("")[0]);
-    })*/
 })();
