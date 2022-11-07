@@ -1,4 +1,4 @@
-import createCodeNode from "./create-code-node.js";
+import createCodeSnippet from "./create-code-snippet.js";
 import createDOM from './create-dom.js';
 
 class CodeGenerator {
@@ -38,27 +38,28 @@ class CodeGenerator {
     generate.call(this);
   }
 
-  #createGenerator(domNode, index) {
-    this.#code.push(`const child0 = document.querySelector("#${this.#rootId}");`);
+  #createGenerator(domNode, name) {
+    this.#code.push(`const root = document.querySelector("#${this.#rootId}");`);
 
-    const codeNode = createCodeNode({
+    const codeSnippet = createCodeSnippet({
       type: domNode.type,
       attributes: domNode.getAllAttributes(),
       text: domNode.text,
-      name: index
+      name: name,
+      parent: "root"
     }); 
 
-    this.#code = [...this.#code, ...codeNode.toArray()];
+    this.#code = [...this.#code, ...codeSnippet.toArray()];
 
-    this.#code.push(`child0.appendChild(${index})`);
+    this.#code.push(`root.appendChild(${index})`);
     
-    return function generate(parentDomNode = domNode, parentCodeNode = codeNode) {
+    return function generate(parentDomNode = domNode, parentCodeSnippet = codeSnippet) {
       /*if (parentDomNode.hasChildNodes()) {
         for (let index = 0; index < parentDomNode.children.length; index++) {
           const childIndex = Math.floor(Math.random() * 1000000);
           const childDOMNode = parentDomNode.children[index];
 
-          let childCodeNode = createCodeNode({
+          let childCodeNode = createCodeSnippet({
             type: childDOMNode.type,
             attributes: childDOMNode.getAllAttributes(),
             text: childDOMNode.text,
@@ -78,7 +79,23 @@ class CodeGenerator {
         }
       }*/
 
+      if(parentDomNode.hasChildNodes()) {
+        for(const [index, childNode] of parentDomNode.children) {
+          const name = Math.floor(Math.random() * 1000000); // use algorithm to create a name instead
+          
+          const codeSnippet = createCodeSnippet({
+            type: domNode.type,
+            attributes: domNode.getAllAttributes(),
+            text: domNode.text,
+            name: name,
+            parent: parentCodeSnippet.name
+          }); 
 
+          this.#code = [...this.#code, ...codeSnippet.toArray()];
+
+          generate.call(this, childNode, codeSnippet)
+        }
+      }
     }
     /*if (parentIndex === 1) {
       this.#codeString += `const child0 = document.querySelector("#${

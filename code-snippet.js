@@ -1,4 +1,4 @@
-class Node {
+class CodeSnippet {
     #type;
     #name;
     #node;
@@ -32,8 +32,8 @@ class Node {
       return this;
     }
   
-    appendChild(childName) {
-      this.#node.push(`${this.#name}.appendChild(${childName});`);
+    appendTo(parentName) {
+      this.#node.push(`${parentName}.appendChild(${this.#node});`);
   
       return this;
     }
@@ -58,7 +58,7 @@ class Node {
     }
   }
   
-  export default Node;
+  export default CodeSnippet;
 
   /*
   class Node {
