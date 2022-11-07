@@ -4,13 +4,12 @@ import createDOM from './create-dom.js';
 class CodeGenerator {
   #html;
   #rootId;
-  #code;
+  #code = [];
+  #names = [];
 
   constructor(html, rootId) {
     this.#html = html;
     this.#rootId = rootId;
-    
-    this.#code = [];
 
     this.#init();
   }
@@ -20,7 +19,8 @@ class CodeGenerator {
   }
 
   toString() {
-    let codeAsString;
+    let codeAsString = "";
+
 
     for(let codeLine of this.#code) {
       codeAsString += codeLine + "\n";
@@ -30,132 +30,113 @@ class CodeGenerator {
   }
 
   #init() {
-    const firstDOMNode = createDOM(this.#html);
+    const firstDomNode = createDOM(this.#html);
 
-    const name = Math.floor(Math.random() * 10000);
+    this.#code.push(`const component = document.querySelector("#${this.#rootId}");`);
 
-    const generate = this.#createGenerator(firstDOMNode, name);
-    generate.call(this);
+    this.generateCode(firstDomNode, "component");
   }
 
-  #createGenerator(domNode, name) {
-    this.#code.push(`const root = document.querySelector("#${this.#rootId}");`);
+  generateCode(domNode, parentName) {
+    const name = this.generateName(domNode);
+    this.#names.push(name);
 
     const codeSnippet = createCodeSnippet({
       type: domNode.type,
       attributes: domNode.getAllAttributes(),
       text: domNode.text,
       name: name,
-      parent: "root"
+      parent: parentName
     }); 
 
     this.#code = [...this.#code, ...codeSnippet.toArray()];
 
-    this.#code.push(`root.appendChild(${index})`);
+    if(domNode.hasChildNodes()) {
+      for(const childNode of domNode.children) {
+        this.generateCode.call(this, childNode, codeSnippet.name);
+      }
+    }
+  }
+
+  generateName(node) {
+    const {id, name, classList, type} = node;
+
+    if(id) {
+      if(!this.#names.find(name => node?.id == name)) return id;
+    }
+
+    if(name) {
+      if(!this.#names.find(name => node?.name == name)) return name;
+    }
+
+    if(classList.length > 0) {
+        let nameResult = null;
+
+        classList.forEach(className => {
+            if(!nameResult) {
+                if(!this.#names.find(name => className == name)) {
+                    nameResult = className;
+                }
+            }
+        })
+
+        if(nameResult) return nameResult;
+    }
     
-    return function generate(parentDomNode = domNode, parentCodeSnippet = codeSnippet) {
-      /*if (parentDomNode.hasChildNodes()) {
-        for (let index = 0; index < parentDomNode.children.length; index++) {
-          const childIndex = Math.floor(Math.random() * 1000000);
-          const childDOMNode = parentDomNode.children[index];
+    let nameResult = false;
+    let index = 1;
+    while(!nameResult) {
+        const typeAndIndex = `${type}-${index}`
+        const result = this.#names.find(name => name == typeAndIndex);
 
-          let childCodeNode = createCodeSnippet({
-            type: childDOMNode.type,
-            attributes: childDOMNode.getAllAttributes(),
-            text: childDOMNode.text,
-            name: childIndex
-          });
-
-          console.log("childCodeNode", childCodeNode.toArray());
-
-          
-
-          this.#code = [...this.#code, ...childCodeNode.toArray()];
-          parentCodeNode.appendChild(childCodeNode.name);
-
-          this.#code = [...this.#code, ...parentCodeNode.toArray()]
-  
-          generate.call(this, childDOMNode, childCodeNode);
+        if(!result) {
+            nameResult = typeAndIndex;
+            return nameResult;
         }
-      }*/
 
+        index += 1;
+    }
+  }
+}
+
+export default CodeGenerator;
+
+/*#generator(firstDomNode) {
+    this.#code.push(`const component = document.querySelector("#${this.#rootId}");`);
+
+    const name = this.generateName(firstDomNode);
+    this.#names.push(name);
+
+    const codeSnippet = createCodeSnippet({
+      type: firstDomNode.type,
+      attributes: firstDomNode.getAllAttributes(),
+      text: firstDomNode.text,
+      name: name,
+      parent: "component"
+    }); 
+
+    this.#code = [...this.#code, ...codeSnippet.toArray()];
+    
+    return function generate(parentDomNode = firstDomNode, parentCodeSnippet = {name: "component"}) {
       if(parentDomNode.hasChildNodes()) {
-        for(const [index, childNode] of parentDomNode.children) {
-          const name = Math.floor(Math.random() * 1000000); // use algorithm to create a name instead
+        for(const [index, childNode] of parentDomNode.children.entries()) {
+          
+          const name = this.generateName(childNode);
+          this.#names.push(name);
           
           const codeSnippet = createCodeSnippet({
-            type: domNode.type,
-            attributes: domNode.getAllAttributes(),
-            text: domNode.text,
+            type: childNode.type,
+            attributes: childNode.getAllAttributes(),
+            text: childNode.text,
             name: name,
             parent: parentCodeSnippet.name
           }); 
 
           this.#code = [...this.#code, ...codeSnippet.toArray()];
 
-          generate.call(this, childNode, codeSnippet)
+          generate.call(this, childNode, codeSnippet);
         }
       }
     }
-    /*if (parentIndex === 1) {
-      this.#codeString += `const child0 = document.querySelector("#${
-        this.#rootId
-      }");\n`;
+  }*/
 
-      this.#codeString += this._createElement(parent, "0", "1");
-      this.#codeString += `\n`;
-    }
-
-    if (parent.hasChildNodes()) {
-      for (let index = 0; index < parent.children.length; index++) {
-        const childIndex = Math.floor(Math.random() * 1000000);
-        const childNode = parent.children[index];
-
-        this.#codeString += this._createElement(
-          childNode,
-          parentIndex,
-          childIndex
-        );
-        this.#codeString += `\n`;
-
-        this._generateDomCode(childNode, childIndex);
-      }
-    }*/
-  }
-}
-
-export default CodeGenerator;
-
-/*
-
-_createGenerator(parent, parentIndex) {
-    return function generator() {
-
-    }
-    /*if (parentIndex === 1) {
-      this.#codeString += `const child0 = document.querySelector("#${
-        this.#rootId
-      }");\n`;
-
-      this.#codeString += this._createElement(parent, "0", "1");
-      this.#codeString += `\n`;
-    }
-
-    if (parent.hasChildNodes()) {
-      for (let index = 0; index < parent.children.length; index++) {
-        const childIndex = Math.floor(Math.random() * 1000000);
-        const childNode = parent.children[index];
-
-        this.#codeString += this._createElement(
-          childNode,
-          parentIndex,
-          childIndex
-        );
-        this.#codeString += `\n`;
-
-        this._generateDomCode(childNode, childIndex);
-      }
-    }
-  }
-
-  */

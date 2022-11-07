@@ -8,7 +8,7 @@ function createCodeSnippet({type, attributes, text, name, parent}) {
     .setTextContent(text)
     .appendTo(parent)
 
-    return node;
+    return codeSnippet;
 }   
 
 export default createCodeSnippet;

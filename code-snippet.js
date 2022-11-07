@@ -33,7 +33,7 @@ class CodeSnippet {
     }
   
     appendTo(parentName) {
-      this.#node.push(`${parentName}.appendChild(${this.#node});`);
+      this.#node.push(`${parentName}.appendChild(${this.#name});`);
   
       return this;
     }

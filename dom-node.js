@@ -28,6 +28,18 @@ class DOMNode {
         }
     }
 
+    get id() {
+        return this.#node.id;
+    }
+
+    get classList() {
+        return this.#node.classList;
+    }
+
+    get name() {
+        return this.#node.getAttribute("name");
+    }
+
     getAllAttributes() {
         let attributes = {};
 
