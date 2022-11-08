@@ -3,12 +3,12 @@
 
 import FS from "./fs.js";
 import mappedFolders from "./folder-mapping.js";
-import DomGenerator from "./js-dom-generator.js";
+import DomGenerator from "./code-generator.js";
 
 //global.__dirname = dirname(fileURLToPath(import.meta.url));
 
 (async () => {
-    const { source, destination } = JSON.parse(await FS.readFile("config/folder-pairs.json"));
+    /*const { source, destination } = JSON.parse(await FS.readFile("config/folder-pairs.json"));
 
     const folderPairs = await mappedFolders(source, destination);
 
@@ -21,5 +21,9 @@ import DomGenerator from "./js-dom-generator.js";
         FS.replaceFileContent(folderPair.destination, "// paste code here h3.html", generator.toString())
 
         // paste code here h3.html
-    }
+    }*/
+
+    const { source, destination } = JSON.parse(await FS.readFile("config/folder-pairs.json"));
+    console.log(source);
+    console.log(destination)
 })();
