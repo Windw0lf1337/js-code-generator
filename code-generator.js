@@ -23,7 +23,12 @@ class CodeGenerator {
 
 
     for(let codeLine of this.#code) {
-      codeAsString += codeLine + "\n";
+      codeAsString += "\t";
+      if(codeLine != "-") {
+        codeAsString += codeLine + "\n";
+      } else {
+        codeAsString += "\n"
+      }
     }
 
     return codeAsString;
@@ -50,6 +55,7 @@ class CodeGenerator {
     }); 
 
     this.#code = [...this.#code, ...codeSnippet.toArray()];
+    this.#code.push("-");
 
     if(domNode.hasChildNodes()) {
       for(const childNode of domNode.children) {
@@ -59,7 +65,7 @@ class CodeGenerator {
   }
 
   generateName(node) {
-    const {id, name, classList, type} = node;
+    let {id, name, classList, type} = node;
 
     if(id) {
       if(!this.#names.find(name => node?.id == name)) return id;
@@ -86,15 +92,26 @@ class CodeGenerator {
     let nameResult = false;
     let index = 1;
     while(!nameResult) {
-        const typeAndIndex = `${type}-${index}`
-        const result = this.#names.find(name => name == typeAndIndex);
+      type = type.toLowerCase();
+      if(type.includes("-")) {
+        type = type
+        .split("-")
+        .map((t, index, typeAsArray) => {
+          if(index == typeAsArray.length - 1) return t.charAt(0).toUpperCase() + t.slice(1)
+          return t;
+        })
+        .join("")
+      }
 
-        if(!result) {
-            nameResult = typeAndIndex;
-            return nameResult;
-        }
+      const typeAndIndex = `${type}${index}`
+      const result = this.#names.find(name => name == typeAndIndex);
 
-        index += 1;
+      if(!result) {
+        nameResult = typeAndIndex;
+        return nameResult;
+      }
+
+      index += 1;
     }
   }
 }
