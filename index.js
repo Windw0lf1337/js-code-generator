@@ -3,7 +3,9 @@
 
 import FS from "./fs.js";
 import mapFiles from "./file-mapping.js";
-import CodeGenerator from "./code-generator.js";
+import Component from "./component.js";
+
+import generateName from './generate-name.js';
 
 //global.__dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -34,7 +36,7 @@ import CodeGenerator from "./code-generator.js";
 
     // start here
 
-    const { source, destination } = JSON.parse(await FS.readFile("config/folder-pairs.json"));
+    /*const { source, destination } = JSON.parse(await FS.readFile("config/folder-pairs.json"));
 
     const filePairs = await mapFiles(source, destination);
 
@@ -42,13 +44,24 @@ import CodeGenerator from "./code-generator.js";
         console.log("f", filePair);
         const html = await FS.readFile(filePair.sourcePath);
 
-        let code = new CodeGenerator(html, 123);
+        let component = new Component(html, 123);
 
-        const regex = new RegExp("\\s*\\/\\/\\scode\\sstarts\\shere\\s([a-zA-Z0-9\-_]*)\\.html\\n([\\s\\S]*)\\n\\s*\\/\\/\\scode\\sends\\shere");
-        let codeWithComments = `\n\t// code starts here ${filePair.sourceFile}\n` + code.toString() + "\n\t// code ends here"
+        const regex = new RegExp("\\/\\/\\scode\\sstarts\\shere\\s([a-zA-Z0-9\\-_]*)\\.html\\n([\\s\\S]*)([\\n]*)\\s*\\/\\/\\scode\\sends\\shere");
+        
+        let codeWithComments = 
+        `\n\t// code starts here ${filePair.sourceFile}\n` + 
+        component.toString() + 
+        "\n\t// code ends here";
         
         FS.replaceFileContent(filePair.destinationPath, regex, codeWithComments);
-    }
+    }*/
+
+    const name = generateName({
+        type: "div",
+        classList: ["card__container", "button--text", "card__action--left"]
+    });
+
+    console.log("name", name);
 })();
 
 // paste code here h3.html
