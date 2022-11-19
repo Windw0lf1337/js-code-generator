@@ -1,13 +1,11 @@
 class CodeSnippet {
     #type;
     #name;
-    #node;
+    #node = [];
   
     constructor(type, name) {
       this.#type = type;
       this.#name = name;
-  
-      this.#node = [];
   
       this.#init();
     }
@@ -20,8 +18,17 @@ class CodeSnippet {
       this.#createElement();
     }
 
-    toArray() {
-      return this.#node;
+    toString() {
+      let codeAsString = "";
+
+      for(let codeLine of this.#node) {
+        codeAsString += "\t";
+        codeAsString += codeLine + "\n";
+      }
+
+      codeAsString += "\n";
+
+      return codeAsString;
     }
   
     #createElement() {

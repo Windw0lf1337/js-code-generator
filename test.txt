@@ -1,0 +1,20 @@
+\/\/\scode\sstarts\shere\s([a-zA-Z0-9\-_]*)\.html\n*\/\/\scode\sends\shere
+
+// code starts here h3.html
+    // code ends here
+
+    \\n*\\/\\/\\scode\\sends\\shere
+
+
+    \\/\\/\\scode\\sstarts\\shere\\s([a-zA-Z0-9\-_]*)\\.html\\n*\\/\\/\\scode\\sends\\shere
+
+function something() {
+    // code starts here h3.html
+    // code ends here
+}
+
+\s*\/\/\scode\sstarts\shere\s([a-zA-Z0-9\-_]*)\.html\n([\s\S]*)\s*\/\/\scode\sends\shere
+
+\n([\s\S]*)
+
+final: \s*\/\/\scode\sstarts\shere\s([a-zA-Z0-9\-_]*)\.html\n([\s\S]*)\s*\/\/\scode\sends\shere

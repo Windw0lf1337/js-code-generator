@@ -12,23 +12,23 @@ class CodeGenerator {
     this.#rootId = rootId;
 
     this.#init();
+
+    //return this.#code;
   }
 
-  toArray() {
+  /*toArray() {
+    return this.#code;
+  }*/
+
+  get code() {
     return this.#code;
   }
 
   toString() {
     let codeAsString = "";
 
-
-    for(let codeLine of this.#code) {
-      codeAsString += "\t";
-      if(codeLine != "-") {
-        codeAsString += codeLine + "\n";
-      } else {
-        codeAsString += "\n"
-      }
+    for(let codeSnippet of this.#code) {
+        codeAsString += codeSnippet;
     }
 
     return codeAsString;
@@ -37,7 +37,7 @@ class CodeGenerator {
   #init() {
     const firstDomNode = createDOM(this.#html);
 
-    this.#code.push(`const component = document.querySelector("#${this.#rootId}");`);
+    this.#code.push(`\tconst component = document.querySelector("#${this.#rootId}");\n`);
 
     this.generateCode(firstDomNode, "component");
   }
@@ -54,8 +54,7 @@ class CodeGenerator {
       parent: parentName
     }); 
 
-    this.#code = [...this.#code, ...codeSnippet.toArray()];
-    this.#code.push("-");
+    this.#code.push(codeSnippet.toString());
 
     if(domNode.hasChildNodes()) {
       for(const childNode of domNode.children) {

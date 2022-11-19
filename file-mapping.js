@@ -10,7 +10,7 @@ const mapFiles = async (source, destination) => {
 
         //console.log("tcontent", textContent)
 
-        const regex = new RegExp("\\/\\/\\sbeginn\\scode\\shere\\s([a-zA-Z0-9\-_]*)\\.html");
+        const regex = new RegExp("\\/\\/\\scode\\sstarts\\shere\\s([a-zA-Z0-9\-_]*)\\.html");
         const matchedHTMLFile = textContent.match(regex);
 
         const matchedHTMLFileName = matchedHTMLFile ? matchedHTMLFile[1] : null;
@@ -22,7 +22,12 @@ const mapFiles = async (source, destination) => {
 
         //console.log("match", matchedSourceFile)
 
-        if(matchedSourceFile) folderPairs.push({source: matchedSourceFile.path, destination: destinationFile.path});
+        if(matchedSourceFile) folderPairs.push({
+            sourceFile: matchedSourceFile.filename,
+            sourcePath: matchedSourceFile.path, 
+            destinationFile: destinationFile.filename,
+            destinationPath: destinationFile.path
+        });
         //console.log("pair", folderPairs)
     }
 
