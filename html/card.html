@@ -1,0 +1,20 @@
+<div class="card" ${id=}>
+    <div class="card__container ${class}" ${tabindex=}>
+        <img class="card__img" src="${img}" crossorigin>
+        <div class="card__info">
+            <div class="card__titleContainer">
+                <h6 class="card__title">${title}</h6>
+                <i class="material-icons" translate=no>${title-icon}</i>
+            </div>
+            <p class="card__subtitle">${subtitle}</p>
+            <div class="card__content">${content}</div>
+        </div>
+        <div class="card__action">
+            <cb-button class="button--text card__action--left">${text-btnLeft}</cb-button>
+            <cb-button class="button--text card__action--right">${text-btnRight}</cb-button>
+            <div class="card__action--rightIcon">
+                <cb-icon-button class="iconButton--noHover">${icon}</cb-icon-button>
+            </div>
+        </div>
+    </div>
+</div>

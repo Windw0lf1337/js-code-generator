@@ -1,4 +1,7 @@
 function something() {
+		
+	
+	
 	// code starts here h3.html
 	const component = document.querySelector("#123");
 	let div1 = document.createElement("DIV");
