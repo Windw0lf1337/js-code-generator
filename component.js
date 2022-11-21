@@ -38,7 +38,14 @@ class Component {
   }
 
   #generateCode(domNode, parentName) {
-    const name = generateName({...domNode, names: this.#names});
+    const name = generateName({
+      id: domNode.id,
+      nodeName: domNode.name,
+      classList: domNode.classList,
+      type: domNode.type,
+      namesArray: this.#names
+    });
+
     this.#names.push(name);
 
     const codeSnippet = createCodeSnippet({

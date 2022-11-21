@@ -36,7 +36,7 @@ import generateName from './generate-name.js';
 
     // start here
 
-    /*const { source, destination } = JSON.parse(await FS.readFile("config/folder-pairs.json"));
+    const { source, destination } = JSON.parse(await FS.readFile("config/folder-pairs.json"));
 
     const filePairs = await mapFiles(source, destination);
 
@@ -54,14 +54,7 @@ import generateName from './generate-name.js';
         "\n\t// code ends here";
         
         FS.replaceFileContent(filePair.destinationPath, regex, codeWithComments);
-    }*/
-
-    const name = generateName({
-        type: "div",
-        classList: ["card__container", "button--text", "card__action--left"]
-    });
-
-    console.log("name", name);
+    }
 })();
 
 // paste code here h3.html

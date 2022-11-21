@@ -1,10 +1,10 @@
 function replaceSpecialChars(string) {
-    if(string.includes("-")) {
+    if(string.match(/[^A-Za-z*]/)) {
         return string
         .split(/[^A-Za-z*]/)
-        .map((t, index, typeAsArray) => {
-          if(index == typeAsArray.length - 1) return t.charAt(0).toUpperCase() + t.slice(1)
-          return t;
+        .map((t, index) => {
+          if(index == 0) return t;
+          return t.charAt(0).toUpperCase() + t.slice(1);
         })
         .join("")
     }
@@ -12,15 +12,14 @@ function replaceSpecialChars(string) {
     return string;
 }
 
-// - -- __ 
-
-function generateName({id, name, classList, type, namesArray = []}) {
-    if(id) {
-      if(!namesArray.find(name => node?.id == name)) return id;
+function generateName({id, nodeName, classList = [], type, namesArray = []}) {
+  console.log("arguments", arguments);  
+  if(id) {
+      if(!namesArray.find(name => id == name)) return replaceSpecialChars(id);
     }
 
-    if(name) {
-      if(!namesArray.find(name => node?.name == name)) return name;
+    if(nodeName) {
+      if(!namesArray.find(name => nodeName == name)) return replaceSpecialChars(nodeName);
     }
 
     if(classList.length > 0) {
@@ -34,29 +33,19 @@ function generateName({id, name, classList, type, namesArray = []}) {
             }
         })
 
-        if(nameResult) return nameResult;
+        if(nameResult) return replaceSpecialChars(nameResult);
     }
     
     let nameResult = false;
     let index = 1;
     while(!nameResult) {
       type = type.toLowerCase();
-      if(type.includes("-")) {
-        type = type
-        .split("-")
-        .map((t, index, typeAsArray) => {
-          if(index == typeAsArray.length - 1) return t.charAt(0).toUpperCase() + t.slice(1)
-          return t;
-        })
-        .join("")
-      }
 
       const typeAndIndex = `${type}${index}`
       const result = namesArray.find(name => name == typeAndIndex);
 
       if(!result) {
-        nameResult = typeAndIndex;
-        return nameResult;
+        return replaceSpecialChars(typeAndIndex);
       }
 
       index += 1;

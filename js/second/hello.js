@@ -1,4 +1,5 @@
 
+	
 	// code starts here card.html
 	const component = document.querySelector("#123");
 	let card = document.createElement("DIV");
@@ -6,68 +7,68 @@
 	card.setAttribute("${id", "}")
 	component.appendChild(card);
 
-	let card__container = document.createElement("DIV");
-	card__container.setAttribute("class", "card__container ${class}")
-	card__container.setAttribute("${tabindex", "}")
-	card.appendChild(card__container);
+	let cardContainer = document.createElement("DIV");
+	cardContainer.setAttribute("class", "card__container ${class}")
+	cardContainer.setAttribute("${tabindex", "}")
+	card.appendChild(cardContainer);
 
-	let card__img = document.createElement("IMG");
-	card__img.setAttribute("class", "card__img")
-	card__img.setAttribute("src", "${img}")
-	card__img.setAttribute("crossorigin", "")
-	card__container.appendChild(card__img);
+	let cardImg = document.createElement("IMG");
+	cardImg.setAttribute("class", "card__img")
+	cardImg.setAttribute("src", "${img}")
+	cardImg.setAttribute("crossorigin", "")
+	cardContainer.appendChild(cardImg);
 
-	let card__info = document.createElement("DIV");
-	card__info.setAttribute("class", "card__info")
-	card__container.appendChild(card__info);
+	let cardInfo = document.createElement("DIV");
+	cardInfo.setAttribute("class", "card__info")
+	cardContainer.appendChild(cardInfo);
 
-	let card__titleContainer = document.createElement("DIV");
-	card__titleContainer.setAttribute("class", "card__titleContainer")
-	card__info.appendChild(card__titleContainer);
+	let cardTitleContainer = document.createElement("DIV");
+	cardTitleContainer.setAttribute("class", "card__titleContainer")
+	cardInfo.appendChild(cardTitleContainer);
 
-	let card__title = document.createElement("H6");
-	card__title.setAttribute("class", "card__title")
-	card__title.textContent = `${title}`;
-	card__titleContainer.appendChild(card__title);
+	let cardTitle = document.createElement("H6");
+	cardTitle.setAttribute("class", "card__title")
+	cardTitle.textContent = `${title}`;
+	cardTitleContainer.appendChild(cardTitle);
 
-	let material-icons = document.createElement("I");
-	material-icons.setAttribute("class", "material-icons")
-	material-icons.setAttribute("translate", "no")
-	material-icons.textContent = `${title-icon}`;
-	card__titleContainer.appendChild(material-icons);
+	let materialIcons = document.createElement("I");
+	materialIcons.setAttribute("class", "material-icons")
+	materialIcons.setAttribute("translate", "no")
+	materialIcons.textContent = `${title-icon}`;
+	cardTitleContainer.appendChild(materialIcons);
 
-	let card__subtitle = document.createElement("P");
-	card__subtitle.setAttribute("class", "card__subtitle")
-	card__subtitle.textContent = `${subtitle}`;
-	card__info.appendChild(card__subtitle);
+	let cardSubtitle = document.createElement("P");
+	cardSubtitle.setAttribute("class", "card__subtitle")
+	cardSubtitle.textContent = `${subtitle}`;
+	cardInfo.appendChild(cardSubtitle);
 
-	let card__content = document.createElement("DIV");
-	card__content.setAttribute("class", "card__content")
-	card__content.textContent = `${content}`;
-	card__info.appendChild(card__content);
+	let cardContent = document.createElement("DIV");
+	cardContent.setAttribute("class", "card__content")
+	cardContent.textContent = `${content}`;
+	cardInfo.appendChild(cardContent);
 
-	let card__action = document.createElement("DIV");
-	card__action.setAttribute("class", "card__action")
-	card__container.appendChild(card__action);
+	let cardAction = document.createElement("DIV");
+	cardAction.setAttribute("class", "card__action")
+	cardContainer.appendChild(cardAction);
 
-	let button--text = document.createElement("CB-BUTTON");
-	button--text.setAttribute("class", "button--text card__action--left")
-	button--text.textContent = `${text-btnLeft}`;
-	card__action.appendChild(button--text);
+	let buttonText = document.createElement("CB-BUTTON");
+	buttonText.setAttribute("class", "button--text card__action--left")
+	buttonText.textContent = `${text-btnLeft}`;
+	cardAction.appendChild(buttonText);
 
-	let card__action--right = document.createElement("CB-BUTTON");
-	card__action--right.setAttribute("class", "button--text card__action--right")
-	card__action--right.textContent = `${text-btnRight}`;
-	card__action.appendChild(card__action--right);
+	let buttonText = document.createElement("CB-BUTTON");
+	buttonText.setAttribute("class", "button--text card__action--right")
+	buttonText.textContent = `${text-btnRight}`;
+	cardAction.appendChild(buttonText);
 
-	let card__action--rightIcon = document.createElement("DIV");
-	card__action--rightIcon.setAttribute("class", "card__action--rightIcon")
-	card__action.appendChild(card__action--rightIcon);
+	let cardActionRightIcon = document.createElement("DIV");
+	cardActionRightIcon.setAttribute("class", "card__action--rightIcon")
+	cardAction.appendChild(cardActionRightIcon);
 
-	let iconButton--noHover = document.createElement("CB-ICON-BUTTON");
-	iconButton--noHover.setAttribute("class", "iconButton--noHover")
-	iconButton--noHover.textContent = `${icon}`;
-	card__action--rightIcon.appendChild(iconButton--noHover);
+	let iconButtonNoHover = document.createElement("CB-ICON-BUTTON");
+	iconButtonNoHover.setAttribute("class", "iconButton--noHover")
+	iconButtonNoHover.textContent = `${icon}`;
+	cardActionRightIcon.appendChild(iconButtonNoHover);
 
 
 	// code ends here
