@@ -1,9 +1,9 @@
 //import { dirname } from 'path';
 //import { fileURLToPath } from 'url';
 
-import FS from "./fs.js";
-import mapFiles from "./file-mapping.js";
-import Component from "./component.js";
+//import FS from "./fs.js";
+//import mapFiles from "./file-mapping.js";
+//import Component from "./component.js";
 
 import generateName from './generate-name.js';
 
@@ -36,7 +36,7 @@ import generateName from './generate-name.js';
 
     // start here
 
-    const { source, destination } = JSON.parse(await FS.readFile("config/folder-pairs.json"));
+    /*const { source, destination } = JSON.parse(await FS.readFile("config/folder-pairs.json"));
 
     const filePairs = await mapFiles(source, destination);
 
@@ -54,7 +54,10 @@ import generateName from './generate-name.js';
         "\n\t// code ends here";
         
         FS.replaceFileContent(filePair.destinationPath, regex, codeWithComments);
-    }
+    }*/
+
+    const name = generateName({id: "12893893", nodeName: "name", classList: ["button__list"], type: "div"}, ["name"]);
+    console.log("name", name);
 })();
 
 // paste code here h3.html
