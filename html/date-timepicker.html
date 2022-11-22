@@ -1,0 +1,158 @@
+<div ${id=} class="dateTimePicker">
+    <div class="dateTimePicker__container" ${aria-disabled=} ${aria-required=}>
+        <div class="dateTimePicker__dateInputContainer">
+            <div class="dateTimePicker__textContainer">
+                <label class="dateTimePicker__label">${label}</label>
+                <span class="dateTimePicker__required">*</span>
+                <div class="dateTimePicker__text" tabindex="0"></div>
+            </div>
+            <div class="dateTimePicker__iconContainer">
+                <cb-icon-button>date_range</cb-icon-button>
+            </div>
+        </div>
+        <div class="dateTimePicker__dateContainer hide">
+            <div class="monthContainer">
+                <div class="left">
+                    <cb-icon-button>navigate_before</cb-icon-button>
+                </div>
+                <div class="name"
+                    data-i18n-month-janurary="${janurary}"
+                    data-i18n-month-februrary="${februrary}"
+                    data-i18n-month-march="${march}"
+                    data-i18n-month-april="${april}"
+                    data-i18n-month-may="${may}"
+                    data-i18n-month-june="${june}"
+                    data-i18n-month-july="${july}"
+                    data-i18n-month-august="${august}"
+                    data-i18n-month-september="${september}"
+                    data-i18n-month-october="${october}"
+                    data-i18n-month-november="${november}"
+                    data-i18n-month-december="${december}">
+                    <span></span> <span></span>
+                </div>
+                <div class="right">
+                    <cb-icon-button>navigate_next</cb-icon-button>
+                </div>
+            </div>
+            <div class="dayContainer">
+                <div class="dayNameContainer">
+                    <div>${monday}</div>
+                    <div>${tuesday}</div>
+                    <div>${wendsday}</div>
+                    <div>${thursday}</div>
+                    <div>${friday}</div>
+                    <div>${saturday}</div>
+                    <div>${sunday}</div>
+                </div>
+                <div class="daysContainer"></div>
+            </div>
+            <div class="actionContainer">
+                <cb-button class="button--text">${today}</cb-button>
+            </div>
+        </div>
+        <div class="dateTimePicker__timeContainer hide">
+            <div class="topContainer">
+                <div class="day">
+                    <div class="info" data-i18n-day-from="${from}" data-i18n-day-to="${to}"></div>                
+                    <div></div>
+                </div>
+            </div>
+            <div class="clockContainer">
+                <div class="clockCircleContainer">
+                    <div class="hourCircle">
+                        <div class="number" tabindex="0">0</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">2</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">4</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">6</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">8</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">10</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">12</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">14</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">16</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">18</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">20</div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number" tabindex="0">22</div>
+                        <div class="number" tabindex="0"></div>
+                    </div>
+                    <div class="minCircle">
+                        <div class="number top" tabindex="0">0</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">5</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">10</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">15</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">20</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">25</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">30</div>
+                        <div class="number"></div>
+                        <div class="number" tabindex="0"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">35</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">40</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">45</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">50</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number top" tabindex="0">55</div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                        <div class="number"></div>
+                    </div>
+                    <div class="time">
+                        <input class="active" type="text" value="00">:<input class="inactive" type="text" value="00">
+                    </div>
+                    <cb-button class="button--text ok">${ok}</cb-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

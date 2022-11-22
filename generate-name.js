@@ -12,16 +12,32 @@ function replaceSpecialChars(string) {
     return string;
 }
 
-function generateName({id, nodeName, classList = [], type, namesArray = []}) {
-  console.log("arguments", arguments);  
+function withoutSpecialChars(func, params1, params2) {
+  let paramsWithoutChars = {};
+  for(let param in params1) {
+    if(typeof params1[param] == "string") {
+      paramsWithoutChars[param] = replaceSpecialChars(params1[param]);
+    }
+
+    if(Array.isArray(params1[param])) {
+      paramsWithoutChars[param] = params1[param].map(p => replaceSpecialChars(p));
+    }
+  }
+
+  return func({...paramsWithoutChars}, params2);
+}
+
+function generateName({id, nodeName, classList = [], type}, namesArray = []) { 
+  console.log("namesArr", namesArray);
   if(id) {
-      if(!namesArray.find(name => id == name)) return replaceSpecialChars(id);
-    }
+    if(!namesArray.find(name => id == name)) return id;
+  }
 
-    if(nodeName) {
-      if(!namesArray.find(name => nodeName == name)) return replaceSpecialChars(nodeName);
-    }
+  if(nodeName) {
+    if(!namesArray.find(name => nodeName == name)) return nodeName;
+  }
 
+    // if class exists then count higher
     if(classList.length > 0) {
         let nameResult = null;
 
@@ -33,7 +49,7 @@ function generateName({id, nodeName, classList = [], type, namesArray = []}) {
             }
         })
 
-        if(nameResult) return replaceSpecialChars(nameResult);
+        if(nameResult) return nameResult;
     }
     
     let nameResult = false;
@@ -41,15 +57,17 @@ function generateName({id, nodeName, classList = [], type, namesArray = []}) {
     while(!nameResult) {
       type = type.toLowerCase();
 
-      const typeAndIndex = `${type}${index}`
+      const typeAndIndex = type + index;
       const result = namesArray.find(name => name == typeAndIndex);
 
       if(!result) {
-        return replaceSpecialChars(typeAndIndex);
+        return typeAndIndex;
       }
 
       index += 1;
     }
 }
 
-export default generateName;
+let generateNameWithoutChars = (node, namesArray) => withoutSpecialChars(generateName, node, namesArray);
+
+export default generateNameWithoutChars;
