@@ -1,6 +1,8 @@
 import createCodeSnippet from "./create-code-snippet.js";
 import createDOM from './create-dom.js';
-import generateName from './generate-name.js';
+
+import generateUniqueName from "./helpers/generate-unique-name.js";
+import { replaceSpecialChars } from './helpers/strings.js'
 
 class Component {
   #html;
@@ -38,13 +40,8 @@ class Component {
   }
 
   #generateCode(domNode, parentName) {
-    const name = generateName({
-      id: domNode.id,
-      nodeName: domNode.name,
-      classList: domNode.classList,
-      type: domNode.type,
-      namesArray: this.#names
-    });
+    const nodeAttribute = this.#getNodeAttribute(domNode);
+    const name = generateUniqueName(replaceSpecialChars(nodeAttribute), this.#names);
 
     this.#names.push(name);
 
@@ -63,6 +60,15 @@ class Component {
         this.#generateCode.call(this, childNode, codeSnippet.name);
       }
     }
+  }
+
+  #getNodeAttribute(node) {
+    const {id, name: nodeName, classList, type} = node;
+
+    if(id) return id;
+    if(nodeName) return nodeName;
+    if(classList.length > 0) return classList[0];
+    if(type) return type;
   }
 }
 
