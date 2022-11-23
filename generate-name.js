@@ -1,3 +1,67 @@
+import { replaceSpecialChars } from './helpers/strings.js';
+
+function withoutSpecialChars(params) {
+  let paramsWithoutChars = {};
+  for(let param in params) {
+    if(typeof params[param] == "string") {
+      paramsWithoutChars[param] = replaceSpecialChars(params[param].toLowerCase());
+    }
+
+    if(Array.isArray(params[param])) {
+      paramsWithoutChars[param] = params[param].map(p => replaceSpecialChars(p).toLowerCase());
+    }
+  }
+
+  return paramsWithoutChars;
+}
+
+function addIndexAfter(func, {namesArray, ...params}) { 
+  const name = func(params);
+
+  let nameResult = false;
+  let index = 1;
+
+  while(!nameResult) {
+    const [result] = namesArray.map(n => n === (name + index))
+    
+    if(!result) {
+      return name + index;
+    }
+
+    index += 1;
+  }
+}
+
+function generateName(params) { 
+  console.log("params", params);
+  const {id, nodeName, classList, type} = withoutSpecialChars(params);
+
+  if(id) return id;
+
+  if(nodeName) return nodeName;
+
+  if(classList?.length > 0) {
+    let nameResult = null;
+
+        classList.forEach(className => {
+            if(!nameResult) {
+                if(!namesArray.find(name => className == name)) {
+                    nameResult = className;
+                }
+            }
+        })
+
+        if(nameResult) return nameResult;
+    return classList;
+  }
+
+  if(type) return type;
+}
+
+export default (params) => addIndexAfter(generateName, params);
+
+/*
+
 function replaceSpecialChars(string) {
     if(string.match(/[^A-Za-z*]/)) {
         return string
@@ -71,3 +135,5 @@ function generateName({id, nodeName, classList = [], type}, namesArray = []) {
 let generateNameWithoutChars = (node, namesArray) => withoutSpecialChars(generateName, node, namesArray);
 
 export default generateNameWithoutChars;
+
+*/
