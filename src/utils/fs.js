@@ -71,18 +71,8 @@ class FS {
       }
     }
 
-  return fileList;
-}
-
- /*
-if(extension) {
-                 return fileList.push(resolvedPath);
-
-                 if(item.split(".")[1] == "js") {
-
-                 }
- */
-
+    return fileList;
+  }
 }
 
 export default FS;

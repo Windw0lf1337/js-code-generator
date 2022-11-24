@@ -1,8 +1,8 @@
 import createCodeSnippet from "./create-code-snippet.js";
-import createDOM from './create-dom.js';
+import createDOM from '../dom/create-dom.js';
 
-import generateUniqueName from "./helpers/generate-unique-name.js";
-import { replaceSpecialChars } from './helpers/strings.js'
+import generateUniqueName from "../helpers/generate-unique-name.js";
+import { replaceSpecialChars } from '../helpers/strings.js'
 
 class Component {
   #html;
