@@ -47,8 +47,6 @@ import { replaceSpecialChars } from './helpers/strings.js'
 
         const regex = new RegExp("\\/\\/\\scode\\sstarts\\shere\\s([a-zA-Z0-9\\-_]*)\\.html([\\s\\S]*)([\\n]*)\\s*\\/\\/\\scode\\sends\\shere");
         
-        console.log("dest", await FS.readFile(filePair.destinationPath));
-        console.log("file match", (await FS.readFile(filePair.destinationPath)).match(regex));
         let codeWithComments = 
             `// code starts here ${filePair.sourceFile}\n` + 
             component.toString() + 

@@ -41,9 +41,10 @@ class Component {
 
   #generateCode(domNode, parentName) {
     const nodeAttribute = this.#getNodeAttribute(domNode);
-    const name = generateUniqueName(replaceSpecialChars(nodeAttribute.toLowerCase()), this.#names);
-
+    const name = generateUniqueName(replaceSpecialChars(nodeAttribute), this.#names);
+    console.log("name", name);
     this.#names.push(name);
+    console.log("names", this.#names);
 
     const codeSnippet = createCodeSnippet({
       type: domNode.type,
@@ -68,7 +69,7 @@ class Component {
     if(id) return id;
     if(nodeName) return nodeName;
     if(classList.length > 0) return classList[0];
-    if(type) return type;
+    if(type) return type.toLowerCase();
   }
 }
 

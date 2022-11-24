@@ -3,7 +3,7 @@ function generateUniqueName(name, existingNames) {
     let index = 1;
 
     while(!nameResult) {
-        const [result] = existingNames.map(n => n === (name + index))
+        const result = existingNames.find(existingName => existingName === (name + index))
         
         if(!result) {
             return name + index;
