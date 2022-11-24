@@ -41,17 +41,18 @@ import { replaceSpecialChars } from './helpers/strings.js'
     const filePairs = await mapFiles(source, destination);
 
     for(let filePair of filePairs) {
-        console.log("f", filePair);
         const html = await FS.readFile(filePair.sourcePath);
 
         let component = new Component(html, 123);
 
-        const regex = new RegExp("\\/\\/\\scode\\sstarts\\shere\\s([a-zA-Z0-9\\-_]*)\\.html\\n([\\s\\S]*)([\\n]*)\\s*\\/\\/\\scode\\sends\\shere");
+        const regex = new RegExp("\\/\\/\\scode\\sstarts\\shere\\s([a-zA-Z0-9\\-_]*)\\.html([\\s\\S]*)([\\n]*)\\s*\\/\\/\\scode\\sends\\shere");
         
+        console.log("dest", await FS.readFile(filePair.destinationPath));
+        console.log("file match", (await FS.readFile(filePair.destinationPath)).match(regex));
         let codeWithComments = 
-            `\n\t// code starts here ${filePair.sourceFile}\n` + 
+            `// code starts here ${filePair.sourceFile}\n` + 
             component.toString() + 
-            "\n\t// code ends here";
+            "\t// code ends here";
         
         FS.replaceFileContent(filePair.destinationPath, regex, codeWithComments);
     }

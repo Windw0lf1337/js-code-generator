@@ -41,7 +41,7 @@ class Component {
 
   #generateCode(domNode, parentName) {
     const nodeAttribute = this.#getNodeAttribute(domNode);
-    const name = generateUniqueName(replaceSpecialChars(nodeAttribute), this.#names);
+    const name = generateUniqueName(replaceSpecialChars(nodeAttribute.toLowerCase()), this.#names);
 
     this.#names.push(name);
 
