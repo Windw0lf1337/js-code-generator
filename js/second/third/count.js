@@ -1,14 +1,11 @@
 	// code starts here date-timepicker.html
 	const component = document.querySelector("#123");
 	let dateTimePicker1 = document.createElement("DIV");
-	dateTimePicker1.setAttribute("${id", "}")
 	dateTimePicker1.setAttribute("class", "dateTimePicker")
 	component.appendChild(dateTimePicker1);
 
 	let dateTimePickerContainer1 = document.createElement("DIV");
 	dateTimePickerContainer1.setAttribute("class", "dateTimePicker__container")
-	dateTimePickerContainer1.setAttribute("${aria-disabled", "}")
-	dateTimePickerContainer1.setAttribute("${aria-required", "}")
 	dateTimePicker1.appendChild(dateTimePickerContainer1);
 
 	let dateTimePickerDateInputContainer1 = document.createElement("DIV");
@@ -21,7 +18,6 @@
 
 	let dateTimePickerLabel1 = document.createElement("LABEL");
 	dateTimePickerLabel1.setAttribute("class", "dateTimePicker__label")
-	dateTimePickerLabel1.textContent = `${label}`;
 	dateTimePickerTextContainer1.appendChild(dateTimePickerLabel1);
 
 	let dateTimePickerRequired1 = document.createElement("SPAN");
@@ -60,18 +56,18 @@
 
 	let name1 = document.createElement("DIV");
 	name1.setAttribute("class", "name")
-	name1.setAttribute("data-i18n-month-janurary", "${janurary}")
-	name1.setAttribute("data-i18n-month-februrary", "${februrary}")
-	name1.setAttribute("data-i18n-month-march", "${march}")
-	name1.setAttribute("data-i18n-month-april", "${april}")
-	name1.setAttribute("data-i18n-month-may", "${may}")
-	name1.setAttribute("data-i18n-month-june", "${june}")
-	name1.setAttribute("data-i18n-month-july", "${july}")
-	name1.setAttribute("data-i18n-month-august", "${august}")
-	name1.setAttribute("data-i18n-month-september", "${september}")
-	name1.setAttribute("data-i18n-month-october", "${october}")
-	name1.setAttribute("data-i18n-month-november", "${november}")
-	name1.setAttribute("data-i18n-month-december", "${december}")
+	name1.setAttribute("data-i18n-month-janurary", "")
+	name1.setAttribute("data-i18n-month-februrary", "")
+	name1.setAttribute("data-i18n-month-march", "")
+	name1.setAttribute("data-i18n-month-april", "")
+	name1.setAttribute("data-i18n-month-may", "")
+	name1.setAttribute("data-i18n-month-june", "")
+	name1.setAttribute("data-i18n-month-july", "")
+	name1.setAttribute("data-i18n-month-august", "")
+	name1.setAttribute("data-i18n-month-september", "")
+	name1.setAttribute("data-i18n-month-october", "")
+	name1.setAttribute("data-i18n-month-november", "")
+	name1.setAttribute("data-i18n-month-december", "")
 	monthContainer1.appendChild(name1);
 
 	let span1 = document.createElement("SPAN");
@@ -97,31 +93,24 @@
 	dayContainer1.appendChild(dayNameContainer1);
 
 	let div1 = document.createElement("DIV");
-	div1.textContent = `${monday}`;
 	dayNameContainer1.appendChild(div1);
 
 	let div2 = document.createElement("DIV");
-	div2.textContent = `${tuesday}`;
 	dayNameContainer1.appendChild(div2);
 
 	let div3 = document.createElement("DIV");
-	div3.textContent = `${wendsday}`;
 	dayNameContainer1.appendChild(div3);
 
 	let div4 = document.createElement("DIV");
-	div4.textContent = `${thursday}`;
 	dayNameContainer1.appendChild(div4);
 
 	let div5 = document.createElement("DIV");
-	div5.textContent = `${friday}`;
 	dayNameContainer1.appendChild(div5);
 
 	let div6 = document.createElement("DIV");
-	div6.textContent = `${saturday}`;
 	dayNameContainer1.appendChild(div6);
 
 	let div7 = document.createElement("DIV");
-	div7.textContent = `${sunday}`;
 	dayNameContainer1.appendChild(div7);
 
 	let daysContainer1 = document.createElement("DIV");
@@ -134,7 +123,6 @@
 
 	let buttonText1 = document.createElement("CB-BUTTON");
 	buttonText1.setAttribute("class", "button--text")
-	buttonText1.textContent = `${today}`;
 	actionContainer1.appendChild(buttonText1);
 
 	let dateTimePickerTimeContainer1 = document.createElement("DIV");
@@ -151,8 +139,8 @@
 
 	let info1 = document.createElement("DIV");
 	info1.setAttribute("class", "info")
-	info1.setAttribute("data-i18n-day-from", "${from}")
-	info1.setAttribute("data-i18n-day-to", "${to}")
+	info1.setAttribute("data-i18n-day-from", "")
+	info1.setAttribute("data-i18n-day-to", "")
 	day1.appendChild(info1);
 
 	let div8 = document.createElement("DIV");
@@ -589,7 +577,6 @@
 
 	let buttonText2 = document.createElement("CB-BUTTON");
 	buttonText2.setAttribute("class", "button--text ok")
-	buttonText2.textContent = `${ok}`;
 	clockCircleContainer1.appendChild(buttonText2);
 
 	// code ends here

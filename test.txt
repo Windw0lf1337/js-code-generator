@@ -20,3 +20,5 @@ function something() {
 final: \/\/\scode\sstarts\shere\s([a-zA-Z0-9\-_]*)\.html\n([\s\S]*)\s*\/\/\scode\sends\shere
 
 \\n([\\s\\S]*)([\\n]*)\\s*\\/\\/\\scode\\sends\\shere
+
+/\$\{((.?)*)\}/

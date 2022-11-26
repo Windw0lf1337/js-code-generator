@@ -42,9 +42,8 @@ class Component {
   #generateCode(domNode, parentName) {
     const nodeAttribute = this.#getNodeAttribute(domNode);
     const name = generateUniqueName(replaceSpecialChars(nodeAttribute), this.#names);
-    console.log("name", name);
+    
     this.#names.push(name);
-    console.log("names", this.#names);
 
     const codeSnippet = createCodeSnippet({
       type: domNode.type,
