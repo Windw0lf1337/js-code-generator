@@ -14,8 +14,6 @@ const codeGenerator = (configFile) => (
             const placeHolderRegex = /\$\{([a-zA-Z0-9\-_=]*)\}/g;
             html = html.replaceAll(placeHolderRegex, "");
 
-            console.log("new html", html);
-
             let component = new Component(html, 123);
 
             const regex = /\/\/\scode\sstarts\shere\s([a-zA-Z0-9\-_]*)\.html([\s\S]*)([\n]*)\s*\/\/\scode\sends\shere/g;

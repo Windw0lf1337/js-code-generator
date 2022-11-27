@@ -1,3 +1,5 @@
+import { replaceSpecialChars } from '../helpers/strings.js';
+
 class CodeSnippet {
     #type;
     #name;
@@ -32,10 +34,20 @@ class CodeSnippet {
     }
   
     #createElement() {
-      this.#node.push(
-        `let ${this.#name} = document.createElement("${this.#type}");`
-      );
-  
+      if(this.#type.startsWith("CB-")) {
+        let cbType = replaceSpecialChars(this.#type.toLowerCase()).replace("cb", "");
+
+        if(this.#type == "CB-BUTTON") cbType = "CB" + cbType;
+      
+        this.#node.push(
+          `let ${this.#name} = ${cbType}.create(id).html()`
+        );
+      } else {
+        this.#node.push(
+          `let ${this.#name} = document.createElement("${this.#type}");`
+        );
+      }
+
       return this;
     }
   
@@ -49,9 +61,11 @@ class CodeSnippet {
       for(let attribute of Object.entries(attributes)) {
         const key = attribute[0];
 
-        this.#node.push(
-          `${this.#name}.setAttribute("${key}", "${attributes[key]}")`
-        );
+        if(!(this.#type.startsWith("CB") && key == "id")) {
+          this.#node.push(
+            `${this.#name}.setAttribute("${key}", "${attributes[key]}")`
+          );
+        }
       }
   
       return this;

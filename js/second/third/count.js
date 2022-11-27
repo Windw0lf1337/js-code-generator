@@ -34,7 +34,7 @@
 	dateTimePickerIconContainer1.setAttribute("class", "dateTimePicker__iconContainer")
 	dateTimePickerDateInputContainer1.appendChild(dateTimePickerIconContainer1);
 
-	let cbIconButton1 = document.createElement("CB-ICON-BUTTON");
+	let cbIconButton1 = IconButton.create(id).html()
 	cbIconButton1.textContent = `date_range`;
 	dateTimePickerIconContainer1.appendChild(cbIconButton1);
 
@@ -50,7 +50,7 @@
 	left1.setAttribute("class", "left")
 	monthContainer1.appendChild(left1);
 
-	let cbIconButton2 = document.createElement("CB-ICON-BUTTON");
+	let cbIconButton2 = IconButton.create(id).html()
 	cbIconButton2.textContent = `navigate_before`;
 	left1.appendChild(cbIconButton2);
 
@@ -80,7 +80,7 @@
 	right1.setAttribute("class", "right")
 	monthContainer1.appendChild(right1);
 
-	let cbIconButton3 = document.createElement("CB-ICON-BUTTON");
+	let cbIconButton3 = IconButton.create(id).html()
 	cbIconButton3.textContent = `navigate_next`;
 	right1.appendChild(cbIconButton3);
 
@@ -121,7 +121,7 @@
 	actionContainer1.setAttribute("class", "actionContainer")
 	dateTimePickerDateContainer1.appendChild(actionContainer1);
 
-	let buttonText1 = document.createElement("CB-BUTTON");
+	let buttonText1 = CBButton.create(id).html()
 	buttonText1.setAttribute("class", "button--text")
 	actionContainer1.appendChild(buttonText1);
 
@@ -575,7 +575,7 @@
 	inactive1.setAttribute("value", "00")
 	time1.appendChild(inactive1);
 
-	let buttonText2 = document.createElement("CB-BUTTON");
+	let buttonText2 = CBButton.create(id).html()
 	buttonText2.setAttribute("class", "button--text ok")
 	clockCircleContainer1.appendChild(buttonText2);
 
